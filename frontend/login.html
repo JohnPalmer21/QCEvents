@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Login</h1>
+  <form onsubmit="return loginWithPhone()">
+    <input type="tel" id="phone" placeholder="Enter your phone number" required />
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    function loginWithPhone() {
+      const phone = document.getElementById("phone").value;
+
+      // Basic phone validation: must be 10 digits
+      const isValid = /^\d{10}$/.test(phone);
+
+      if (isValid) {
+        alert("Login successful!");
+        // TODO: Save session or redirect to homepage
+        return true;
+      } else {
+        alert("Please enter a valid 10-digit phone number.");
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>
