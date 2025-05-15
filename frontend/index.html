@@ -1,12 +1,36 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QC Events</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-  <h1>Upcoming Events</h1>
-  <div id="event-list"></div>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">QC Events</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Calendar</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="header">
+      <h1>Upcoming Events</h1>
+      <p>Discover exciting events happening on campus</p>
+    </div>
+
+    <div id="event-list" class="event-list"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>

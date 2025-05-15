@@ -1,15 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-  <h1>Login</h1>
-  <form onsubmit="return loginWithPhone()">
-    <input type="tel" id="phone" placeholder="Enter your phone number" required />
-    <button type="submit">Login</button>
-  </form>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">QC Events</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Calendar</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="login-container">
+      <h1>Log In</h1>
+      <form id="loginForm" onsubmit="return loginWithPhone()">
+        <div class="form-group">
+          <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+          <input type="tel" id="phone" class="form-control" placeholder="Enter your 10-digit phone number" required />
+        </div>
+        <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Login</button>
+      </form>
+    </div>
+  </div>
 
   <script>
     function loginWithPhone() {
@@ -20,11 +44,12 @@
 
       if (isValid) {
         alert("Login successful!");
-        // TODO: Save session or redirect to homepage
-        return true;
+        // Redirect to home page after successful login
+        window.location.href = "index.html";
+        return false; // Prevent form submission
       } else {
         alert("Please enter a valid 10-digit phone number.");
-        return false;
+        return false; // Prevent form submission
       }
     }
   </script>

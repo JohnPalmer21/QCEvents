@@ -1,13 +1,54 @@
+
+I'd be happy to improve the frontend design of your event website. Let me create a more modern and visually appealing design with better styling, improved layout, and some additional features.
+
+
+style.css
+Code 
+
+index.html
+Code 
+
+event.html
+Code 
+
+login.html
+Code 
+
+Making edits...
+ 
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Details</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-  <h1>Event Details</h1>
-  <p><strong>Time:</strong> 3:00 PM</p>
-  <p><strong>Location:</strong> Student Union Room 101</p>
-  <p><strong>Description:</strong> Placeholder description for the event.</p>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">QC Events</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Calendar</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div id="event-detail" class="event-detail">
+      <!-- Event content will be inserted here by JavaScript -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
