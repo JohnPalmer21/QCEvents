@@ -5,13 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DB {
-	private static final String URL = "jdbc:mysql://3.140.251.52:3306/event_manager"; // change DB name if needed
-	private static final String USER = "root"; // use your MySQL username
-	private static final String PASS = "";     // your MySQL password
+    private static final String URL = "jdbc:mysql://3.86.107.16:3306/event_manager";
+    private static final String USER = "teamuser"; // or root if you're using that
+    private static final String PASS = "teammate123"; // or whatever password you set
 
-	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(URL, USER, PASS);
-	}
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASS);
+    }
 }
-
  

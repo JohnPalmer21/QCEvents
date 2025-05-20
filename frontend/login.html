@@ -36,22 +36,33 @@
   </div>
 
   <script>
-    function loginWithPhone() {
-      const phone = document.getElementById("phone").value;
-
-      // Basic phone validation: must be 10 digits
-      const isValid = /^\d{10}$/.test(phone);
-
-      if (isValid) {
+function loginWithPhone() {
+  const phone = document.getElementById("phone").value;
+  if (!/^\d{10}$/.test(phone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return false;
+  }
+  fetch("http://3.86.107.16:8080/qc-events/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `phone=${encodeURIComponent(phone)}`
+  })
+    .then(response => {
+      if (response.status === 200 || response.status === 201) {
         alert("Login successful!");
-        // Redirect to home page after successful login
         window.location.href = "index.html";
-        return false; // Prevent form submission
       } else {
-        alert("Please enter a valid 10-digit phone number.");
-        return false; // Prevent form submission
+        alert("Login failed.");
       }
-    }
+    })
+    .catch(err => {
+      console.error("Error during login:", err);
+      alert("Something went wrong.");
+    });
+  return false;
+}
   </script>
 </body>
 </html>
