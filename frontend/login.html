@@ -25,10 +25,11 @@
   <div class="container">
     <div class="login-container">
       <h1>Log In</h1>
-      <form id="loginForm" onsubmit="return loginWithPhone()">
+      <form id="loginForm">
         <div class="form-group">
           <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
           <input type="tel" id="phone" class="form-control" placeholder="Enter your 10-digit phone number" required />
+          <small class="form-text">We'll use this to track your event RSVPs</small>
         </div>
         <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Login</button>
       </form>
@@ -36,33 +37,47 @@
   </div>
 
   <script>
-function loginWithPhone() {
-  const phone = document.getElementById("phone").value;
-  if (!/^\d{10}$/.test(phone)) {
-    alert("Please enter a valid 10-digit phone number.");
-    return false;
-  }
-  fetch("http://3.86.107.16:8080/qc-events/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: `phone=${encodeURIComponent(phone)}`
-  })
-    .then(response => {
-      if (response.status === 200 || response.status === 201) {
-        alert("Login successful!");
-        window.location.href = "index.html";
-      } else {
-        alert("Login failed.");
-      }
-    })
-    .catch(err => {
-      console.error("Error during login:", err);
-      alert("Something went wrong.");
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      loginWithPhone();
     });
-  return false;
-}
+
+    function loginWithPhone() {
+      const phone = document.getElementById("phone").value;
+      
+      // Validate phone number format
+      if (!/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+      }
+      
+      // Send login request to API
+      fetch("http://3.86.107.16:8080/qc-events/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `phone=${encodeURIComponent(phone)}`
+      })
+        .then(response => {
+          if (response.status === 200 || response.status === 201) {
+            // Store user phone in local storage
+            localStorage.setItem("userPhone", phone);
+            alert("Login successful!");
+            
+            // Redirect to home page or last visited page
+            const redirectUrl = sessionStorage.getItem("redirectAfterLogin") || "index.html";
+            sessionStorage.removeItem("redirectAfterLogin");
+            window.location.href = redirectUrl;
+          } else {
+            alert("Login failed. Please try again.");
+          }
+        })
+        .catch(err => {
+          console.error("Error during login:", err);
+          alert("Something went wrong. Please try again later.");
+        });
+    }
   </script>
 </body>
 </html>
