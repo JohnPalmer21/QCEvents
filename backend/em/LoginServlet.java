@@ -23,18 +23,18 @@ public class LoginServlet extends HttpServlet {
          ResultSet rs = ps.executeQuery();
 
          if (rs.next()) {
-             response.setStatus(200);
+             response.setStatus(200); // Successful login
          } else {
              // optional: auto-register user
              PreparedStatement insert = conn.prepareStatement("INSERT INTO users (phone) VALUES (?)");
              insert.setString(1, phone);
              insert.executeUpdate();
-             response.setStatus(201); // created
+             response.setStatus(201); // Sucessful registration created
          }
 
      } catch (Exception e) {
          e.printStackTrace();
-         response.setStatus(500);
+         response.setStatus(500); // Server Error
      }
  }
 }
