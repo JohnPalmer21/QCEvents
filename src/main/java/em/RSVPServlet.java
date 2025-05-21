@@ -1,4 +1,16 @@
+// ---- Fix for RSVPServlet.java ----
 package em;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 
 @WebServlet("/rsvp")
 public class RSVPServlet extends HttpServlet {
@@ -20,6 +32,7 @@ public class RSVPServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(500);
+            response.getWriter().write("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
         }
     }
 }
