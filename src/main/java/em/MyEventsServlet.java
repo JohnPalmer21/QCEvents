@@ -1,5 +1,17 @@
 package em;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
 @WebServlet("/my-events")
 public class MyEventsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

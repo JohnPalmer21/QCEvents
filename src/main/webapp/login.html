@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">QC Events</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Calendar</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="login-container">
+      <h1>Log In</h1>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+          <input type="tel" id="phone" class="form-control" placeholder="Enter your 10-digit phone number" required />
+          <small class="form-text">We'll use this to track your event RSVPs</small>
+        </div>
+        <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      loginWithPhone();
+    });
+  
+    function loginWithPhone() {
+      const phone = document.getElementById("phone").value;
+  
+      if (!/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+      }
+  
+      fetch("http://localhost:8080/qcevents/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `phone=${encodeURIComponent(phone)}`
+      })
+      .then(response => {
+        if (response.status === 200 || response.status === 201) {
+          localStorage.setItem("userPhone", phone);
+          alert("Login successful!");
+          const redirectUrl = sessionStorage.getItem("redirectAfterLogin") || "index.html";
+          sessionStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirectUrl;
+        } else {
+          alert("Login failed. Please try again.");
+        }
+      })
+      .catch(err => {
+        console.error("Error during login:", err);
+        alert("Something went wrong. Please try again later.");
+      });
+    }
+  </script>
+  
+</body>
+</html>
