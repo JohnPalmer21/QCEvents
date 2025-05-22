@@ -3,31 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QC Events</title>
+  <title>Admin Event Moderation</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-  <!-- Navigation -->
   <nav>
     <div class="nav-container">
-      <a href="index.html" class="logo">QC Events</a>
+      <a href="index.html" class="logo">QC Events Admin</a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="#">Calendar</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="login.html">Login</a></li>
+        <li><a href="admin.html">Admin</a></li>
+        <li><a href="login.html">Logout</a></li>
       </ul>
     </div>
   </nav>
-
-  <!-- Main Content -->
   <div class="container">
-    <div class="header">
-      <h1>Upcoming Events</h1>
-      <p>Discover exciting events happening on campus</p>
-      <label for="major-filter" style="font-weight:bold;margin-right:8px;">Filter by Major:</label>
-      <select id="major-filter" style="margin-right:16px;">
+    <h1>Admin Event Moderation</h1>
+    <div style="margin-bottom:16px;">
+      <label for="admin-major-filter" style="font-weight:bold;margin-right:8px;">Filter by Major:</label>
+      <select id="admin-major-filter" style="margin-right:16px;">
         <option value="all">All</option>
         <option value="Art">Art</option>
         <option value="Athletics">Athletics</option>
@@ -41,8 +36,8 @@
         <option value="Psychology">Psychology</option>
         <option value="Sciences">Sciences</option>
       </select>
-      <label for="interest-filter" style="font-weight:bold;margin-right:8px;">Filter by Interest:</label>
-      <select id="interest-filter">
+      <label for="admin-interest-filter" style="font-weight:bold;margin-right:8px;">Filter by Interest:</label>
+      <select id="admin-interest-filter">
         <option value="all">All</option>
         <option value="Finance">Finance</option>
         <option value="Arts&Crafts">Arts & Crafts</option>
@@ -55,17 +50,29 @@
         <option value="Health">Health</option>
         <option value="Hobbies">Hobbies</option>
         <option value="Public Good">Public Good</option>
-
       </select>
     </div>
-
-    <div id="event-list" class="event-list">
-      <!-- Events will be loaded here -->
-      <div class="loading">Loading events...</div>
+    <div id="admin-event-list">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Major</th>
+            <th>Interest</th>
+            <th>Flag Reason</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-event-tbody">
+          <!-- Event rows will be inserted here by JS -->
+        </tbody>
+      </table>
+      <div id="admin-event-message"></div>
     </div>
   </div>
-
   <script src="script.js"></script>
+  <script src="admin-script.js"></script>
 </body>
 </html>
 
