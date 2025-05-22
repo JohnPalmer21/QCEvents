@@ -20,6 +20,17 @@
   </nav>
   <div class="container">
     <h1>Admin Event Moderation</h1>
+    <!-- Create Event Form -->
+    <form id="create-event-form" style="margin-bottom:24px;">
+      <h2>Create New Event</h2>
+      <input type="text" name="title" placeholder="Title"  />
+      <input type="text" name="description" placeholder="Description"  />
+      <input type="date" name="date"  />
+      <input type="time" name="time"  />
+      <input type="text" name="location" placeholder="Location"  />
+      <input type="text" name="category" placeholder="Category"  />
+      <button type="submit">Create Event</button>
+    </form>
     <div style="margin-bottom:16px;">
       <label for="admin-major-filter" style="font-weight:bold;margin-right:8px;">Filter by Major:</label>
       <select id="admin-major-filter" style="margin-right:16px;">

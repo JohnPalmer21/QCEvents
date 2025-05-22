@@ -149,12 +149,24 @@ if (document.getElementById("event-detail")) {
             exportEventToICS(event);
           };
         }
+        // Only initialize the map if the #map div exists
+        document.addEventListener("DOMContentLoaded", function() {
+        const mapDiv = document.getElementById("map");
+        if (mapDiv) {
+          mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2aW5zb21hbiIsImEiOiJjbWF6MW5jY3YwZzAyMmpwcnF2djl5Mm9hIn0.G4XZtb-RbCzifyJgvqI5NA';
+          const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-73.815, 40.736], // Queens College
+            zoom: 14
+          });
+        }
 
         // Show and render Mapbox map with marker for event location (CUNY Queens College buildings)
         const mapDiv = document.getElementById("map");
         if (mapDiv && event.location) {
           mapDiv.style.display = "block";
-          mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2aW5zb21hbiIsImEiOiJjbWF6MW5jY3YwZzAyMmpwcnF2djl5Mm9hIn0.G4XZtb-RbCzifyJgvqI5NA'; // Replace with your Mapbox token
+          mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2aW5zb21hbiIsImEiOiJjbWF6MW5jY3YwZzAyMmpwcnF2djl5Mm9hIn0.G4XZtb-RbCzifyJgvqI5NA';
 
           // Hardcoded building name to coordinates mapping for CUNY Queens College
           const qcBuildings = {
@@ -179,11 +191,12 @@ if (document.getElementById("event-detail")) {
                 center: coords,
                 zoom: 17
               });
-              new mapboxgl.Marker()
-                .setLngLat(coords)
-                .setPopup(new mapboxgl.Popup().setText(building))
-                .addTo(map);
-              found = true;
+            new mapboxgl.Marker()
+            .setLngLat(coords)
+            .setPopup(new mapboxgl.Popup().setText(building))
+            .addTo(map);
+            found = true;
+            }
 
               // Optional : Directions to marker (optional, possible in the future). Mapbox Directions API can be used.
 
@@ -205,10 +218,10 @@ if (document.getElementById("event-detail")) {
                     .setPopup(new mapboxgl.Popup().setText(event.title))
                     .addTo(map);
                 } else {
-                  mapDiv.style.display = "none";
+                  mapDiv.style.display = "block";
                 }
               })
-              .catch(() => { mapDiv.style.display = "none"; });
+              .catch(function() { mapDiv.style.display = "none"; });
           }
         }
 
@@ -357,3 +370,5 @@ if (interestFilter) {
 }
 
 
+
+});
