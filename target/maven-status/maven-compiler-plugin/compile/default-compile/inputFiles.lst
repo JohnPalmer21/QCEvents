@@ -7,6 +7,8 @@ C:\Users\Aditya\QCEvents\src\main\java\em\EventCreateServlet.java
 C:\Users\Aditya\QCEvents\src\main\java\em\EventDeleteServlet.java
 C:\Users\Aditya\QCEvents\src\main\java\em\EventEditServlet.java
 C:\Users\Aditya\QCEvents\src\main\java\em\EventsServlet.java
+C:\Users\Aditya\QCEvents\src\main\java\em\FilterEventsServlet.java
+C:\Users\Aditya\QCEvents\src\main\java\em\GeminiFlagService.java
 C:\Users\Aditya\QCEvents\src\main\java\em\JWTUtil.java
 C:\Users\Aditya\QCEvents\src\main\java\em\LoginServlet.java
 C:\Users\Aditya\QCEvents\src\main\java\em\MyEventsServlet.java
