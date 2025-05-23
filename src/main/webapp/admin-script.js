@@ -19,7 +19,7 @@ function fetchFlaggedEvents(major, interest) {
     });
 }
 
-// Render the admin event list with Approve/Reject buttons
+// Render the admin event list with Approve/Reject/Edit/Delete buttons
 function renderAdminEventList(events) {
   var tbody = document.getElementById('admin-event-tbody');
   var messageDiv = document.getElementById('admin-event-message');
@@ -40,6 +40,8 @@ function renderAdminEventList(events) {
       '<td>' +
         '<button class="approve-btn" data-id="' + event.id + '">Approve</button>' +
         '<button class="reject-btn" data-id="' + event.id + '">Reject</button>' +
+        '<button class="edit-btn" data-id="' + event.id + '">Edit</button>' +
+        '<button class="delete-btn" data-id="' + event.id + '">Delete</button>' +
       '</td>';
     tbody.appendChild(row);
   });
@@ -55,6 +57,53 @@ function renderAdminEventList(events) {
     btn.addEventListener('click', function() {
       var eventId = this.getAttribute('data-id');
       rejectEvent(eventId);
+    });
+  });
+  var editBtns = document.getElementsByClassName('edit-btn');
+  Array.prototype.forEach.call(editBtns, function(btn) {
+    btn.addEventListener('click', function() {
+      var eventId = this.getAttribute('data-id');
+      var newTitle = prompt('Enter new title:');
+      if (newTitle) {
+        fetch('/secure/event/edit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'event_id=' + encodeURIComponent(eventId) + '&title=' + encodeURIComponent(newTitle)
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert('Event updated!');
+              reloadAdminEvents();
+            } else {
+              alert('Failed to update event.');
+            }
+          })
+          .catch(() => alert('Error updating event.'));
+      }
+    });
+  });
+  var deleteBtns = document.getElementsByClassName('delete-btn');
+  Array.prototype.forEach.call(deleteBtns, function(btn) {
+    btn.addEventListener('click', function() {
+      var eventId = this.getAttribute('data-id');
+      if (confirm('Are you sure you want to delete this event?')) {
+        fetch('/secure/event/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'event_id=' + encodeURIComponent(eventId)
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert('Event deleted!');
+              reloadAdminEvents();
+            } else {
+              alert('Failed to delete event.');
+            }
+          })
+          .catch(() => alert('Error deleting event.'));
+      }
     });
   });
 }
@@ -114,3 +163,30 @@ window.addEventListener('DOMContentLoaded', function() {
   }
   reloadAdminEvents(); // Initial load
 });
+
+// Create event handler
+document.addEventListener('DOMContentLoaded', function() {
+  var createForm = document.getElementById('create-event-form');
+  if (createForm) {
+    createForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var formData = new FormData(createForm);
+      fetch('/secure/event/create', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert('Event created successfully!');
+            createForm.reset();
+            reloadAdminEvents();
+          } else {
+            alert('Failed to create event.');
+          }
+        })
+        .catch(() => alert('Error creating event.'));
+    });
+  }
+});
+
