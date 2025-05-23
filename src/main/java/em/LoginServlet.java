@@ -1,6 +1,5 @@
 package em;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,51 +13,85 @@ import java.sql.ResultSet;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String phone = request.getParameter("phone");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String phoneStr = request.getParameter("phone");
+        String password = request.getParameter("password");
         String registerFlag = request.getParameter("register");
-        String role = request.getParameter("role");
         String major = request.getParameter("major");
         String interests = request.getParameter("interests");
+        String username = request.getParameter("username");
+
+        if (phoneStr == null || password == null || phoneStr.isEmpty() || password.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Phone number and password are required");
+            return;
+        }
+
+        int phone_num;
+        try {
+            phone_num = Integer.parseInt(phoneStr);
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Invalid phone number format");
+            return;
+        }
 
         try (Connection conn = DB.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE phone = ?");
-            stmt.setString(1, phone);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE phone_num = ?");
+            stmt.setInt(1, phone_num);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                // User exists, proceed with login
+                // User exists, check password for login
+                String dbPassword = rs.getString("password");
+                if (!password.equals(dbPassword)) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("Incorrect password");
+                    return;
+                }
                 String userRole = rs.getString("role");
                 String userMajor = rs.getString("major");
                 String userInterests = rs.getString("interests");
+                String userName = rs.getString("username");
 
-                String token = JWTUtil.generateToken(phone, userRole, userMajor, userInterests);
+                String token = JWTUtil.generateToken(phoneStr, userRole, userMajor, userInterests);
 
                 response.setContentType("application/json");
                 PrintWriter out = response.getWriter();
-                out.print("{\"token\": \"" + token + "\", \"role\": \"" + userRole + "\"}");
+                out.print("{\"token\": \"" + token + "\", \"role\": \"" + userRole + "\", \"username\": \"" + userName + "\"}");
                 out.flush();
             } else if ("true".equalsIgnoreCase(registerFlag)) {
                 // Registration flow
-                if (role == null || major == null || interests == null) {
+                if (username == null || username.isEmpty() || major == null || interests == null) {
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().write("Missing registration fields");
                     return;
                 }
+
+                // Check if username is unique
+                PreparedStatement userCheck = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
+                userCheck.setString(1, username);
+                ResultSet userRs = userCheck.executeQuery();
+                if (userRs.next()) {
+                    response.setStatus(HttpServletResponse.SC_CONFLICT);
+                    response.getWriter().write("Username already exists");
+                    return;
+                }
                 PreparedStatement insertStmt = conn.prepareStatement(
-                    "INSERT INTO users (phone, role, major, interests) VALUES (?, ?, ?, ?)"
+                    "INSERT INTO users (username, phone_num, password, role, major, interests) VALUES (?, ?, ?, ?, ?, ?)"
                 );
-                insertStmt.setString(1, phone);
-                insertStmt.setString(2, role);
-                insertStmt.setString(3, major);
-                insertStmt.setString(4, interests);
+                insertStmt.setString(1, username);
+                insertStmt.setInt(2, phone_num);
+                insertStmt.setString(3, password); // For production, hash the password
+                insertStmt.setString(4, "user"); // Set role to 'user' by default
+                insertStmt.setString(5, major);
+                insertStmt.setString(6, interests);
                 insertStmt.executeUpdate();
 
-                // Successful registration : generate a token
-                String token = JWTUtil.generateToken(phone, role, major, interests);
+                String token = JWTUtil.generateToken(phoneStr, "user", major, interests);
                 response.setContentType("application/json");
                 PrintWriter out = response.getWriter();
-                out.print("{\"token\": \"" + token + "\", \"role\": \"" + role + "\"}");
+                out.print("{\"token\": \"" + token + "\", \"role\": \"user\", \"username\": \"" + username + "\"}");
                 out.flush();
             } else {
                 // User not found and not registering
