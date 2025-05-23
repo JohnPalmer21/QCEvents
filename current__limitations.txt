@@ -1,0 +1,11 @@
+# Current Limitations
+
+1. Gemini API is simulated, not live.
+2. Google Calendar export uses static ICS download, not OAuth.
+3. No password reset functionality.
+4. No file upload (e.g., images) for events.
+5. Mobile app UI not built; web-only interface.
+6. Login not functional
+7. Events don't repost to database
+
+These may be addressed in future iterations (Sprint 4).

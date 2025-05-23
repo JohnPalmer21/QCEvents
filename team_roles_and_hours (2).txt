@@ -1,0 +1,24 @@
+# Team Roles and Man-Hours Across All Sprints
+
+| Name   | Sprint | Role              | Tasks Covered                                                                  | Estimated Hours |
+|--------|--------|-------------------|---------------------------------------------------------------------------------|-----------------|
+| Aditya | 1      | Frontend Dev      | Built HTML/CSS layout, event detail structure, mock data integration            | 12              |
+| Aditya | 2      | Backend Dev       | Login logic, RSVP endpoints, rsvps table, /my-events                            | 18              |
+| Aditya | 3      | QA Tester         | Tested Gemini flagging, map view, filtering, auth, edge cases                   | 10              |
+| Aditya | 4      | Scrum Master      | Final repo cleanup, docs upload, GitHub merge, submission checklist             | 8               |
+| John   | 1      | Scrum Master      | Setup GitHub, Kanban board, synced frontend/backend data formats                | 8               |
+| John   | 2      | Frontend Dev      | Connected real data to UI, login form, RSVP buttons                             | 12              |
+| John   | 3      | Backend Dev       | Gemini API, role middleware, officer/admin endpoints, /login returns role       | 20              |
+| John   | 4      | QA Tester         | Ran final tests, logged issues, wrote test report                               | 6               |
+| Davin  | 1      | QA Tester         | Tested UI layout, mock event loading, backend endpoints                         | 8               |
+| Davin  | 2      | Scrum Master      | Tracked tasks, bug triage, coordinated Sprint 3 planning                        | 6               |
+| Davin  | 3      | Frontend Dev      | Map view, calendar export, admin/officer UI, filtering                          | 20              |
+| Davin  | 4      | Backend Dev       | Refactored servlets, DB config, input sanitization                              | 10              |
+| Andy   | 1      | Backend Dev       | Set up servlet project, mock endpoints, DB schema                               | 10              |
+| Andy   | 2      | QA Tester         | Tested login, RSVP, event filtering; wrote test cases                           | 10              |
+| Andy   | 3      | Scrum Master      | Synced team, validated protected routes, documented APIs                        | 8               |
+| Andy   | 4      | Frontend Dev      | UI polish, responsive layout, cross-browser testing                             | 10              |
+
+**Total Team Hours Across All Sprints: ~176**
+
+All work is original unless otherwise stated.

@@ -1,0 +1,13 @@
+Honor Statement
+
+We, the undersigned members of QC Events, affirm that the work submitted in this project is our own, except where otherwise stated. 
+
+We acknowledge that we used AI-based tools, including GitHub Copilot and GPT models, to assist in generating and improving code. All such usage was in accordance with course guidelines, and we have reviewed and validated all AI-generated content to ensure its correctness and appropriateness for our project.
+
+Team Members:
+- John Palmer		(Signature: John Palmer)
+- Aditya Dwivedi 	(Signature: Aditya Dwivedi) 
+- Andy Zaruma		(Signature: Andy Zaruma)
+- Davin Soman		(Signature: Davin Soman)
+
+Date: 5/23/2025
