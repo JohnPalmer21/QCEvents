@@ -20,6 +20,7 @@ public class LoginServlet extends HttpServlet {
         String major = request.getParameter("major");
         String interests = request.getParameter("interests");
         String username = request.getParameter("username");
+        String checkFlag = request.getParameter("check");
 
         if (phoneStr == null || password == null || phoneStr.isEmpty() || password.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -40,6 +41,19 @@ public class LoginServlet extends HttpServlet {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE phone_num = ?");
             stmt.setInt(1, phone_num);
             ResultSet rs = stmt.executeQuery();
+
+            if (checkFlag != null) {
+                // Only check if user exists, for frontend branching
+                response.setContentType("application/json");
+                PrintWriter out = response.getWriter();
+                if (rs.next()) {
+                    out.print("{\"registered\": true}");
+                } else {
+                    out.print("{\"registered\": false}");
+                }
+                out.flush();
+                return;
+            }
 
             if (rs.next()) {
                 // User exists, check password for login
