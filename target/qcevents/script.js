@@ -45,8 +45,11 @@ if (document.getElementById("event-list")) {
     .catch(error => console.error("Error loading events:", error));
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> Micropushing
 // Fetch and display filtered events using FilterEventsServlet
 function fetchFilteredEvents(major, interest) {
   var urlParams = new URLSearchParams(window.location.search);
@@ -107,8 +110,13 @@ if (document.getElementById("event-detail")) {
     console.log("Fetching all events for event details from:", fetchUrl);
   }
   fetch(fetchUrl)
+<<<<<<< HEAD
     .then(function(response) { return response.json(); })
     .then(function(events) {
+=======
+    .then(response => response.json())
+    .then(events => {
+>>>>>>> Micropushing
       var event = null;
       if (Array.isArray(events)) {
         for (var i = 0; i < events.length; i++) {
@@ -120,6 +128,10 @@ if (document.getElementById("event-detail")) {
       } else if (typeof events == 'object' && events.id == eventId) {
         event = events;
       }
+<<<<<<< HEAD
+=======
+
+>>>>>>> Micropushing
       var detailContainer = document.getElementById("event-detail");
       if (event) {
         const imageKey = event.image || "career";
@@ -135,13 +147,19 @@ if (document.getElementById("event-detail")) {
           <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to All Events</a>
         `;
 
+<<<<<<< HEAD
         // Gemini flag indicator
+=======
+>>>>>>> Micropushing
         if (event.flaggedByGemini) {
           const flagDiv = document.getElementById("gemini-flag");
           if (flagDiv) flagDiv.style.display = "block";
         }
 
+<<<<<<< HEAD
         // Show export to Google Calendar button
+=======
+>>>>>>> Micropushing
         const exportBtn = document.getElementById("export-gcal-btn");
         if (exportBtn) {
           exportBtn.style.display = "inline-block";
@@ -150,6 +168,7 @@ if (document.getElementById("event-detail")) {
           };
         }
 
+<<<<<<< HEAD
         // Show and render Mapbox map with marker for event location (CUNY Queens College buildings)
         const mapDiv = document.getElementById("map");
         if (mapDiv && event.location) {
@@ -184,6 +203,9 @@ if (document.getElementById("event-detail")) {
                 .setPopup(new mapboxgl.Popup().setText(building))
                 .addTo(map);
               found = true;
+            }
+
+          }
 
               // Optional : Directions to marker (optional, possible in the future). Mapbox Directions API can be used.
 
@@ -211,6 +233,67 @@ if (document.getElementById("event-detail")) {
               .catch(() => { mapDiv.style.display = "none"; });
           }
         }
+=======
+        document.addEventListener("DOMContentLoaded", function() {
+          const mapDiv = document.getElementById("map");
+          if (mapDiv && event.location) {
+            mapDiv.style.display = "block";
+            mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2aW5zb21hbiIsImEiOiJjbWF6MW5jY3YwZzAyMmpwcnF2djl5Mm9hIn0.G4XZtb-RbCzifyJgvqI5NA';
+
+            const qcBuildings = {
+              "Kiely Hall": [-73.8157, 40.7365],
+              "Science Building": [-73.8152, 40.7372],
+              "Rosenthal Library": [-73.8162, 40.7369],
+              "Student Union": [-73.8172, 40.7362],
+              "Powdermaker Hall": [-73.8142, 40.7367],
+              "Remsen Hall": [-73.8137, 40.7371],
+              "Colden Auditorium": [-73.8155, 40.7357],
+              "Dining Hall": [-73.8170, 40.7357],
+            };
+
+            let found = false;
+            for (const [building, coords] of Object.entries(qcBuildings)) {
+              if (event.location.toLowerCase().includes(building.toLowerCase())) {
+                const map = new mapboxgl.Map({
+                  container: 'map',
+                  style: 'mapbox://styles/mapbox/streets-v11',
+                  center: coords,
+                  zoom: 17
+                });
+                new mapboxgl.Marker()
+                  .setLngLat(coords)
+                  .setPopup(new mapboxgl.Popup().setText(building))
+                  .addTo(map);
+                found = true;
+                break;
+              }
+            }
+
+            if (!found) {
+              fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(event.location)}.json?access_token=${mapboxgl.accessToken}`)
+                .then(res => res.json())
+                .then(data => {
+                  if (data.features && data.features.length > 0) {
+                    const [lng, lat] = data.features[0].center;
+                    const map = new mapboxgl.Map({
+                      container: 'map',
+                      style: 'mapbox://styles/mapbox/streets-v11',
+                      center: [lng, lat],
+                      zoom: 17
+                    });
+                    new mapboxgl.Marker()
+                      .setLngLat([lng, lat])
+                      .setPopup(new mapboxgl.Popup().setText(event.title))
+                      .addTo(map);
+                  } else {
+                    mapDiv.style.display = "block";
+                  }
+                })
+                .catch(() => { mapDiv.style.display = "none"; });
+            }
+          }
+        });
+>>>>>>> Micropushing
 
         document.getElementById("rsvp-button").addEventListener("click", () => {
           const phone = localStorage.getItem("userPhone");
@@ -250,11 +333,21 @@ if (document.getElementById("event-detail")) {
     });
 }
 
+<<<<<<< HEAD
 // Export event to ICS file for Google Calendar
 function exportEventToICS(event) {
   var startDate = event.date.replace(/-/g, '');
   var hour;
   var minute;
+=======
+// ✅ Closing brace for event-detail block (was missing)
+
+
+// Export event to ICS file for Google Calendar
+function exportEventToICS(event) {
+  var startDate = event.date.replace(/-/g, '');
+  var hour, minute;
+>>>>>>> Micropushing
   if (event.time && event.time.indexOf(':') > -1) {
     var timeParts = event.time.split(':');
     hour = timeParts[0];
@@ -268,6 +361,7 @@ function exportEventToICS(event) {
   var endTime = endHour + pad(minute) + '00';
 
   var icsContent = [
+<<<<<<< HEAD
     'BEGIN:VCALENDAR', // Start of the calendar file
     'VERSION:2.0',    // ICS file version
     'BEGIN:VEVENT',   // Start of the event
@@ -278,6 +372,18 @@ function exportEventToICS(event) {
     'DTEND:' + startDate + 'T' + endTime,     // Date/time event ends
     'END:VEVENT',   // End of the event
     'END:VCALENDAR' // End of the calendar file
+=======
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'BEGIN:VEVENT',
+    'SUMMARY:' + event.title,
+    'DESCRIPTION:' + event.description,
+    'LOCATION:' + event.location,
+    'DTSTART:' + startDate + 'T' + startTime,
+    'DTEND:' + startDate + 'T' + endTime,
+    'END:VEVENT',
+    'END:VCALENDAR'
+>>>>>>> Micropushing
   ].join('\n');
 
   var blob = new Blob([icsContent], { type: 'text/calendar' });
@@ -338,6 +444,7 @@ var majorFilter = document.getElementById("major-filter");
 var interestFilter = document.getElementById("interest-filter");
 
 function handleFilterChange() {
+<<<<<<< HEAD
   var majorValue = "all";
   var interestValue = "all";
   if (majorFilter) {
@@ -346,6 +453,10 @@ function handleFilterChange() {
   if (interestFilter) {
     interestValue = interestFilter.value;
   }
+=======
+  var majorValue = majorFilter ? majorFilter.value : "all";
+  var interestValue = interestFilter ? interestFilter.value : "all";
+>>>>>>> Micropushing
   fetchFilteredEvents(majorValue, interestValue);
 }
 
@@ -355,5 +466,7 @@ if (majorFilter) {
 if (interestFilter) {
   interestFilter.addEventListener("change", handleFilterChange);
 }
+<<<<<<< HEAD
 
-
+=======
+>>>>>>> Micropushing

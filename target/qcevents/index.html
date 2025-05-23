@@ -6,6 +6,9 @@
   <title>QC Events</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
 </head>
 <body>
   <!-- Navigation -->
@@ -21,7 +24,19 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
+    <!-- Map Section -->
+<div id="map" style="width: 100%; height: 400px;"></div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2aW5zb21hbiIsImEiOiJjbWF6MW5jY3YwZzAyMmpwcnF2djl5Mm9hIn0.G4XZtb-RbCzifyJgvqI5NA';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-73.815, 40.736], // Queens College
+      zoom: 14
+    });
+  </script>
+
+    <!-- Main Content -->
   <div class="container">
     <div class="header">
       <h1>Upcoming Events</h1>
