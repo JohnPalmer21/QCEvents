@@ -1,19 +1,11 @@
 package em;
 
-import java.io.IOException;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 @WebFilter("/secure/*")
 public class AuthFilter implements Filter {
@@ -23,6 +15,14 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        // For testing: allow any request to act as admin with testuser info
+        req.setAttribute("phone", "1234567890");
+        req.setAttribute("role", "admin");
+        req.setAttribute("major", "CS");
+        req.setAttribute("interests", "All");
+        chain.doFilter(request, response);}
+        // Uncomment below to restore JWT validation
+        /*
         String authHeader = req.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -49,4 +49,5 @@ public class AuthFilter implements Filter {
 
     public void init(FilterConfig filterConfig) {}
     public void destroy() {}
+    */
 }

@@ -6,6 +6,9 @@ const eventColors = {
   tech: "#ff7043"
 };
 
+// Global variable to hold ec2 instance URL
+// let ec2InstanceUrl = "http://ec2-3-86-107-16.compute-1.amazonaws.com:8080";
+
 // Pads a number with a leading zero if needed (ex: 9 -> 09 for time formatting)
 function pad(number) {
   return number.toString().padStart(2, '0');
@@ -56,7 +59,7 @@ function fetchFilteredEvents(major, interest) {
     urlParams.set('interest', interest);
     console.log("Filtering by interest:", interest);
   }
-  var url = '/qcevents/events/filter?' + urlParams.toString();
+  var url = "/qcevents/events/filter?" + urlParams.toString();
   console.log("Fetching filtered events from:", url);
   fetch(url)
     .then(function(response) { return response.json(); })
@@ -98,7 +101,7 @@ if (document.getElementById("event-detail")) {
   var interest = urlParams.get('interest');
   var fetchUrl;
   if ((major != null && major != "") || (interest != null && interest != "")) {
-    fetchUrl = '/qcevents/events/filter?' + urlParams.toString();
+    fetchUrl = "/qcevents/events/filter?" + urlParams.toString();
     console.log("Fetching filtered event details from:", fetchUrl);
   } else {
     fetchUrl = "/qcevents/events";
@@ -343,3 +346,4 @@ if (majorFilter) {
 if (interestFilter) {
   interestFilter.addEventListener("change", handleFilterChange);
 }
+

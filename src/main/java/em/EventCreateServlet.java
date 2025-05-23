@@ -1,14 +1,14 @@
 package em;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 @WebServlet("/secure/event/create")
 public class EventCreateServlet extends HttpServlet {
@@ -16,9 +16,9 @@ public class EventCreateServlet extends HttpServlet {
         String role = (String) request.getAttribute("role");
         String phone = (String) request.getAttribute("phone");
 
-        if (role == null || !role.equals("officer")) {
+        if (role == null || !role.equals("admin")) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write("Only club officers can create events.");
+            response.getWriter().write("Only admins can create events.");
             return;
         }
 
@@ -35,7 +35,7 @@ public class EventCreateServlet extends HttpServlet {
         try (Connection conn = DB.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(
                 "INSERT INTO events (title, description, date, time, location, category, created_by, flagged, flag_reason, approved) " +
-                "VALUES (?, ?, ?, ?, ?, ?, (SELECT id FROM users WHERE phone = ?), ?, ?, false)");
+                "VALUES (?, ?, ?, ?, ?, ?, (SELECT id FROM users WHERE username = ?), ?, ?, false)");
 
             stmt.setString(1, title);
             stmt.setString(2, description);
@@ -43,7 +43,7 @@ public class EventCreateServlet extends HttpServlet {
             stmt.setString(4, time);
             stmt.setString(5, location);
             stmt.setString(6, category);
-            stmt.setString(7, phone);
+            stmt.setString(7, "testuser"); // Use username instead of phone
             stmt.setBoolean(8, flagged);
             stmt.setString(9, flagReason);
 
