@@ -184,6 +184,9 @@ if (document.getElementById("event-detail")) {
                 .setPopup(new mapboxgl.Popup().setText(building))
                 .addTo(map);
               found = true;
+            }
+
+          }
 
               // Optional : Directions to marker (optional, possible in the future). Mapbox Directions API can be used.
 
@@ -355,5 +358,4 @@ if (majorFilter) {
 if (interestFilter) {
   interestFilter.addEventListener("change", handleFilterChange);
 }
-
 
