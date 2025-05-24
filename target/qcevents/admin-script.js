@@ -19,11 +19,7 @@ function fetchFlaggedEvents(major, interest) {
     });
 }
 
-<<<<<<< HEAD
-// Render the admin event list with Approve/Reject buttons
-=======
 // Render the admin event list with Approve/Reject/Edit/Delete buttons
->>>>>>> Micropushing
 function renderAdminEventList(events) {
   var tbody = document.getElementById('admin-event-tbody');
   var messageDiv = document.getElementById('admin-event-message');
@@ -44,11 +40,8 @@ function renderAdminEventList(events) {
       '<td>' +
         '<button class="approve-btn" data-id="' + event.id + '">Approve</button>' +
         '<button class="reject-btn" data-id="' + event.id + '">Reject</button>' +
-<<<<<<< HEAD
-=======
         '<button class="edit-btn" data-id="' + event.id + '">Edit</button>' +
         '<button class="delete-btn" data-id="' + event.id + '">Delete</button>' +
->>>>>>> Micropushing
       '</td>';
     tbody.appendChild(row);
   });
@@ -66,8 +59,6 @@ function renderAdminEventList(events) {
       rejectEvent(eventId);
     });
   });
-<<<<<<< HEAD
-=======
   var editBtns = document.getElementsByClassName('edit-btn');
   Array.prototype.forEach.call(editBtns, function(btn) {
     btn.addEventListener('click', function() {
@@ -115,7 +106,6 @@ function renderAdminEventList(events) {
       }
     });
   });
->>>>>>> Micropushing
 }
 
 // Approve event
@@ -173,8 +163,6 @@ window.addEventListener('DOMContentLoaded', function() {
   }
   reloadAdminEvents(); // Initial load
 });
-<<<<<<< HEAD
-=======
 
 // Create event handler
 document.addEventListener('DOMContentLoaded', function() {
@@ -202,4 +190,3 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
->>>>>>> Micropushing
